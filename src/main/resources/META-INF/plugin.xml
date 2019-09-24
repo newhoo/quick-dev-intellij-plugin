@@ -1,0 +1,78 @@
+<idea-plugin>
+    <id>io.github.newhoo.quick-dev</id>
+    <name>quick-dev</name>
+    <vendor email="huzunrong@gmail.com" url="https://github.com/newhoo/quick-dev-intellij-plugin">
+        quick-dev-intellij-plugin
+    </vendor>
+
+    <description><![CDATA[
+    <p>quick-dev plugin, help development quickly!</p>
+
+    <br/>
+    <p>Main Functions:</p>
+    <li>find Apollo config and open it in browser</li>
+    <li>find git info and open it in browser</li>
+    <li>auto execute mysql explain when execute sql</li>
+    <li>invoke spring bean method conveniently when run project with jrebel</li>
+    <li>manage jvm parameter</li>
+
+    <br/><br/>
+    <p>主要功能：</p>
+    <li>快速打开Apollo配置中心</li>
+    <li>快速打开git仓库</li>
+    <li>自动查看mysql执行计划</li>
+    <li>快速调用Spring bean方法，依赖jrebel启动</li>
+    <li>jvm启动参数管理</li>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    -->
+    <depends>com.intellij.modules.java</depends>
+    <depends>Git4Idea</depends>
+
+    <idea-version since-build="181.0"/>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <applicationService serviceImplementation="io.github.newhoo.setting.PluginGlobalSetting"/>
+        <projectConfigurable instance="io.github.newhoo.setting.SettingConfigurable"/>
+
+        <intentionAction>
+            <className>io.github.newhoo.intention.InvokeMethodCreateIntention</className>
+            <category>Java:Other</category>
+        </intentionAction>
+        <java.programPatcher implementation="io.github.newhoo.extension.MyPreRunChecks"/>
+    </extensions>
+
+    <actions>
+        <!-- #e16531 -->
+        <!-- Tools菜单 -->
+        <group id="QuickDev.ToolsMenuGroup" text="_Quick Dev" popup="true" icon="/img/devops.png">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+
+            <action id="QuickDev.GitLabOpenInBrowserAction"
+                    class="io.github.newhoo.action.GitLabOpenInBrowserAction" text="Open Gitlab" icon="/img/git.png">
+                <add-to-group group-id="EditorPopupMenu"/>
+                <add-to-group group-id="EditorTabPopupMenu"/>
+            </action>
+            <action id="QuickDev.ApolloOpenInBrowserAction"
+                    class="io.github.newhoo.action.ApolloOpenInBrowserAction" text="Open Apollo" icon="/img/apollo.png">
+            </action>
+            <!--            <action id="io.github.newhoo.setting.PluginSettingAction"-->
+            <!--                    class="io.github.newhoo.setting.PluginSettingAction" text="Configure Plugin" icon="/img/setting.png">-->
+            <!--            </action>-->
+            <!--            <action id="QuickDev.PropertiesCreateAction"-->
+            <!--                    class="io.github.newhoo.action.PropertiesCreateAction" text="Generate Configuration File" icon="/img/file.png">-->
+            <!--            </action>-->
+        </group>
+
+        <action id="QuickDev.InvokeBeanAction"
+                class="io.github.newhoo.action.InvokeBeanAction" text="快速调用" icon="/img/run.png">
+            <keyboard-shortcut first-keystroke="alt x" keymap="$default"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>
