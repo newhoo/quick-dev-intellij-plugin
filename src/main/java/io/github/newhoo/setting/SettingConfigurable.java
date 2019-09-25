@@ -23,7 +23,7 @@ public class SettingConfigurable implements Configurable {
 
     public SettingConfigurable(Project project) {
         this.projectSetting = new PluginProjectSetting(project);
-        this.settingForm = new SettingForm();
+        this.settingForm = new SettingForm(project);
     }
 
     @Nls(capitalization = Capitalization.Title)

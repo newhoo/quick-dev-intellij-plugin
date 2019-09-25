@@ -1,17 +1,22 @@
 package io.github.newhoo.util;
 
+import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ide.CopyPasteManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.impl.source.PsiJavaFileImpl;
+import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.PsiShortNamesCache;
+import com.intellij.util.indexing.FileBasedIndex;
 import io.github.newhoo.common.jr.plugin.JrHelper;
 import io.github.newhoo.setting.PluginProjectSetting;
 import org.apache.commons.lang3.ArrayUtils;
@@ -26,8 +31,11 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.intellij.openapi.actionSystem.CommonDataKeys.EDITOR;
 import static com.intellij.openapi.actionSystem.CommonDataKeys.PSI_FILE;
@@ -177,5 +185,27 @@ public final class AppUtils {
         } catch (IOException ignored) {
         }
         return flag;
+    }
+
+    public static Set<String> findDubboService(Project project) {
+        PsiManager psiManager = PsiManager.getInstance(project);
+        Collection<VirtualFile> containingFiles = FileBasedIndex.getInstance().getContainingFiles(FileTypeIndex.NAME,
+                JavaFileType.INSTANCE,
+                GlobalSearchScope.projectScope(project));
+        return containingFiles.stream()
+                              .flatMap(virtualFile -> Stream.of(((PsiJavaFile) psiManager.findFile(virtualFile)).getClasses()))
+                              .filter(psiClass -> {
+                                  for (PsiAnnotation annotation : psiClass.getAnnotations()) {
+                                      if ("com.alibaba.dubbo.config.annotation.Service".equals(annotation.getQualifiedName())) {
+                                          return true;
+                                      }
+                                  }
+                                  return false;
+                              })
+                              .map(psiClass -> {
+                                  PsiClass[] interfaces = psiClass.getInterfaces();
+                                  return interfaces.length == 0 ? psiClass.getQualifiedName() : interfaces[0].getQualifiedName();
+                              })
+                              .collect(Collectors.toSet());
     }
 }

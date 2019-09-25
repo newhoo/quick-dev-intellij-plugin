@@ -2,10 +2,12 @@ package io.github.newhoo.setting;
 
 import com.intellij.icons.AllIcons.Actions;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.project.Project;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.TableUtil;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.table.JBTable;
+import io.github.newhoo.util.AppUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -39,6 +41,8 @@ public class SettingForm {
     public JTextField jvmParameterText;
     private JPanel jvmParameterGeneratePanel;
 
+    private final Project project;
+
     private MyJvmTableModel dataModel = new MyJvmTableModel();
     private TableModelListener tableModelListener = e -> {
         String jvmParameter = dataModel.list.stream()
@@ -58,7 +62,9 @@ public class SettingForm {
         jvmParameterText.setToolTipText(jvmParameter);
     };
 
-    public SettingForm() {
+    public SettingForm(Project project) {
+        this.project = project;
+
         init();
     }
 
@@ -103,13 +109,20 @@ public class SettingForm {
         apolloBtn.addActionListener(l -> {
             dataModel.addRow(true, "env", "DEV");
         });
-        JButton dubboGroupBtn = new JButton("dubbo本地开发");
-        dubboGroupBtn.addActionListener(l -> {
+        JButton dubboLocalDevBtn = new JButton("dubbo本地开发");
+        dubboLocalDevBtn.addActionListener(l -> {
             dataModel.addRow(true, "dubbo.registry.register", "false");
             dataModel.addRow(true, "dubbo.service.group", System.getProperty("user.name"));
         });
+        JButton dubboGroupBtn = new JButton("dubbo服务分组");
+        dubboGroupBtn.addActionListener(l -> {
+            AppUtils.findDubboService(this.project).forEach(s -> {
+                dataModel.addRow(true, "dubbo.service." + s + ".group", System.getProperty("user.name"));
+            });
+        });
         jvmParameterGeneratePanel.add(jvmMemoryBtn);
         jvmParameterGeneratePanel.add(apolloBtn);
+        jvmParameterGeneratePanel.add(dubboLocalDevBtn);
         jvmParameterGeneratePanel.add(dubboGroupBtn);
     }
 
