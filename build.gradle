@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.github.newhoo'
-version '1.1'
+version '1.0.0'
 
 sourceCompatibility = 1.8
 
@@ -27,8 +27,6 @@ intellij {
 
 patchPluginXml {
     changeNotes """
-    <p>add jvm parameter management.</p>
-    <br/>
-    <p>增加jvm参数启动管理.</p>
+    <p>new plugin, just use it.</p>
     """
 }

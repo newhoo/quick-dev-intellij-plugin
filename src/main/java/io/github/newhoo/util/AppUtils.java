@@ -16,7 +16,6 @@ import com.intellij.psi.impl.source.PsiJavaFileImpl;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.PsiShortNamesCache;
-import com.intellij.util.indexing.FileBasedIndex;
 import io.github.newhoo.common.jr.plugin.JrHelper;
 import io.github.newhoo.setting.PluginProjectSetting;
 import org.apache.commons.lang3.ArrayUtils;
@@ -189,9 +188,7 @@ public final class AppUtils {
 
     public static Set<String> findDubboService(Project project) {
         PsiManager psiManager = PsiManager.getInstance(project);
-        Collection<VirtualFile> containingFiles = FileBasedIndex.getInstance().getContainingFiles(FileTypeIndex.NAME,
-                JavaFileType.INSTANCE,
-                GlobalSearchScope.projectScope(project));
+        Collection<VirtualFile> containingFiles = FileTypeIndex.getFiles(JavaFileType.INSTANCE, GlobalSearchScope.projectScope(project));
         return containingFiles.stream()
                               .flatMap(virtualFile -> Stream.of(((PsiJavaFile) psiManager.findFile(virtualFile)).getClasses()))
                               .filter(psiClass -> {
