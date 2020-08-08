@@ -1,3 +1,20 @@
+# 本插件不再更新！！！
+由于这个插件的几个功能依赖了jrebel，所以不再更新了（193.5）。所有功能已经拆成了单独的插件，且不依赖jrebel，更好用了。
+
+本人插件主页，欢迎拍砖：https://plugins.jetbrains.com/author/6c08090c-6cc3-4b01-94a2-2c9a9947b6cd
+
+- 快速打开配置中心 https://plugins.jetbrains.com/plugin/13202-apollo-conf
+
+- MySQL EXPLAIN https://plugins.jetbrains.com/plugin/13192-mysql-explain
+
+- 快速调用 https://plugins.jetbrains.com/plugin/13203-bean-invoker
+
+- jvm启动参数管理 https://plugins.jetbrains.com/plugin/13204-jvm-parameter
+
+- 快速打开git仓库 暂时没上传，给你找了个https://plugins.jetbrains.com/plugin/8183-gitlink
+
+---
+
 # quick-dev-intellij-plugin
 
 快速开发插件-idea，主要包含功能：
