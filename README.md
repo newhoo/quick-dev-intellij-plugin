@@ -11,7 +11,7 @@
 
 - jvm启动参数管理 https://plugins.jetbrains.com/plugin/13204-jvm-parameter
 
-- 快速打开git仓库 暂时没上传，给你找了个https://plugins.jetbrains.com/plugin/8183-gitlink
+- 快速打开git仓库 暂时没上传
 
 ---
 
