@@ -1,11 +1,17 @@
 <idea-plugin>
     <id>io.github.newhoo.quick-dev</id>
     <name>quick-dev</name>
-    <vendor email="huzunrong@gmail.com" url="https://github.com/newhoo/quick-dev-intellij-plugin">
+    <vendor email="huzunrong@foxmail.com" url="https://github.com/newhoo/quick-dev-intellij-plugin">
         quick-dev-intellij-plugin
     </vendor>
 
     <description><![CDATA[
+
+    <h2>No more updates!! Please use <a href="https://plugins.jetbrains.com/author/6c08090c-6cc3-4b01-94a2-2c9a9947b6cd">my other plugins</a> for same function.</h2>
+    <h2>该插件不再更新！！具体功能已拆分为多个插件，请查看<a href="https://plugins.jetbrains.com/author/6c08090c-6cc3-4b01-94a2-2c9a9947b6cd">本人主页</a>。</h2>
+
+    <br/>
+
     <p>quick-dev plugin, help development quickly!</p>
 
     <br/>

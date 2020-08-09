@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.github.newhoo'
-version '1.0.0'
+version '1.0.1'
 
 sourceCompatibility = 1.8
 
@@ -27,6 +27,6 @@ intellij {
 
 patchPluginXml {
     changeNotes """
-    <p>new plugin, just use it.</p>
+    <p>fix compatibility problems.</p>
     """
 }
