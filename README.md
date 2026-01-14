@@ -1,3 +1,9 @@
+# 2026-01-14 说明
+
+强烈建议升级到 [RestfulBox](https://plugins.jetbrains.com/plugin/14723-restfulbox), 包括该插件所有功能
+
+---
+
 # 本插件不再更新！！！
 由于这个插件的几个功能依赖了jrebel，所以不再更新了（193.5）。所有功能已经拆成了单独的插件，且不依赖jrebel，更好用了。
 
